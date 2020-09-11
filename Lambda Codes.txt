@@ -1,0 +1,21 @@
+Data Insertion:
+import json
+import boto3
+dynamoDB=boto3.resource('dynamodb')
+table=dynamoDB.Table('sanitizeAppDB')
+def lambda_handler(event, context):
+    print('Event')
+    print(event)
+    table.put_item(Item=event)
+    return{"code":200,"message":"Data is inserted successfully"}
+
+Data Retrieval:
+import boto3
+dynamoDB = boto3.resource('dynamodb')
+table = dynamoDB.Table('sanitizeAppDB')
+def lambda_handler(event, context):
+    name=event['Name']
+    print("Name")
+    print(name)
+    resp=table.get_item(Key={"Name":name})
+    return resp['Item']
